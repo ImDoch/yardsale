@@ -1,0 +1,64 @@
+/*VARIABLES EN CSS*/
+:root {
+    --white: #FFFFFF;
+    --black: #000000;
+    --dark: #232830;
+    --very-light-pink: #C7C7C7;
+    --text-input-field: #F7F7F7;
+    --hospital-green: #ACD9B2;
+    --sm: 14px;
+    --md: 16px;
+    --lg: 18px;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.mobile-menu {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.mobile-menu a {
+    text-decoration: none;
+    color: var(--black);
+    font-weight: bold;
+}
+
+.mobile-menu ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.mobile-menu ul:nth-child(1) {
+    border-bottom: 1px solid var(--very-light-pink);
+    padding-bottom: 50px;
+}
+
+.mobile-menu ul:nth-child(3) {
+    margin-bottom: 20px;
+}
+
+.mobile-menu ul li {
+    margin-bottom: 24px;
+}
+
+.mobile-menu ul:nth-child(3) li {
+    margin-bottom: 8px;
+}
+
+.email {
+    font-size: var(--sm);
+    font-weight: 300 !important;
+}
+
+.sign-out {
+    color: var(--hospital-green) !important;
+    font-size: var(--sm);
+}
+
