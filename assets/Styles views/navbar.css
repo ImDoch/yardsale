@@ -52,7 +52,6 @@ nav {
     align-items: center;
     height: 60px;
 }
-
 .navbar-left ul li a {
     text-decoration: none;
     color: var(--very-light-pink);

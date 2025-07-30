@@ -1,20 +1,230 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="Assets/Styles views/styles.css">
-
-    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <title>YardSale</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
-<body>
 
+<body>
+    <header>
+        <nav>
+            <img src="assets/icons/icon_menu.svg" alt="menu icon" class="menu">
+
+            <div class="navbar-left">
+                <img src="assets/logos/logo_yard_sale.svg" alt="logo" class="logo">
+
+                <ul>
+                    <li>
+                        <a href="#">All</a>
+                    </li>
+                    <li>
+                        <a href="#">Clothes</a>
+                    </li>
+                    <li>
+                        <a href="#">Electronics</a>
+                    </li>
+                    <li>
+                        <a href="#">Furnitures</a>
+                    </li>
+                    <li>
+                        <a href="#">Toys</a>
+                    </li>
+                    <li>
+                        <a href="#">Others</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-right">
+                <ul>
+                    <li class="navbar-email">camilayakoo@gmail.com</li>
+                    <li class="navbar-shopping-cart">
+                        <img src="assets/icons/icon_shopping_cart.svg" alt="Shopping cart icon">
+
+                        <div>0</div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <section class="mobile-menu hidden">
+            <ul>
+                <li>
+                    <a href="#">CATEGORIES</a>
+                </li>
+
+                <li>
+                    <a href="#">All</a>
+                </li>
+
+                <li>
+                    <a href="#">Clothes</a>
+                </li>
+
+                <li>
+                    <a href="#">Electronics</a>
+                </li>
+
+                <li>
+                    <a href="#">Furnitures</a>
+                </li>
+
+                <li>
+                    <a href="#">Toys</a>
+                </li>
+
+                <li>
+                    <a href="#">Others</a>
+                </li>
+            </ul>
+
+            <ul>
+                <li>
+                    <a href="#">My orders</a>
+                </li>
+
+                <li>
+                    <a href="#">My account</a>
+                </li>
+            </ul>
+
+            <ul>
+                <li>
+                    <a href="#" class="email">camilayakoo@gmail.com</a>
+                </li>
+
+                <li>
+                    <a href="#" class="sign-out">Sign out</a>
+                </li>
+            </ul>
+        </section>
+        <div class="desktop-menu hidden">
+            <ul>
+                <li>
+                    <a href="#" class="title">My orders</a>
+                </li>
+
+                <li>
+                    <a href="#" class="title">My account</a>
+                </li>
+
+                <li>
+                    <a href="#">Sign out</a>
+                </li>
+            </ul>
+        </div>
+        <div class="my-order hidden">
+            <div class="my-order-container">
+                <h1 class="title">My order</h1>
+
+                <div class="my-order-content">
+                    <div class="order">
+                        <p>
+                            <span>04.25.21</span>
+                            <span>6 articles</span>
+                        </p>
+
+                        <p> $560.00</p>
+                    </div>
+
+                    <div class="shopping-cart">
+                        <figure>
+                            <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                                alt="Bike image" class="product-img">
+                        </figure>
+
+                        <p>Bike</p>
+                        <p>$50,00</p>
+                    </div>
+
+                    <div class="shopping-cart">
+                        <figure>
+                            <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                                alt="Bike image" class="product-img">
+                        </figure>
+
+                        <p>Bike</p>
+                        <p>$50,00</p>
+                    </div>
+
+                    <div class="shopping-cart">
+                        <figure>
+                            <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                                alt="Bike image" class="product-img">
+                        </figure>
+
+                        <p>Bike</p>
+                        <p>$50,00</p>
+                    </div>
+
+                    <div class="shopping-cart">
+                        <figure>
+                            <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                                alt="Bike image" class="product-img">
+                        </figure>
+
+                        <p>Bike</p>
+                        <p>$50,00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="cards-container">
+            <article class="product-card">
+                <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    alt="Bike image" class="product-img">
+
+                <div class="product-info">
+                    <div>
+                        <p>$120,00</p>
+                        <p>Bike</p>
+                    </div>
+
+                    <figure>
+                        <img src="assets/icons/bt_add_to_cart.svg" alt="Card icon">
+                    </figure>
+                </div>
+            </article>
+            <article class="product-card">
+                <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    alt="Bike image" class="product-img">
+
+                <div class="product-info">
+                    <div>
+                        <p>$120,00</p>
+                        <p>Bike</p>
+                    </div>
+
+                    <figure>
+                        <img src="assets/icons/bt_add_to_cart.svg" alt="Card icon">
+                    </figure>
+                </div>
+            </article>
+            <article class="product-card">
+                <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    alt="Bike image" class="product-img">
+
+                <div class="product-info">
+                    <div>
+                        <p>$120,00</p>
+                        <p>Bike</p>
+                    </div>
+
+                    <figure>
+                        <img src="assets/icons/bt_add_to_cart.svg" alt="Card icon">
+                    </figure>
+                </div>
+            </article>
+        </section>
+    </main>
 </body>
+
 </html>
