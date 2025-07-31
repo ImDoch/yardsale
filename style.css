@@ -79,6 +79,9 @@ nav {
 
     .navbar-shopping-cart {
         position: relative;
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     .navbar-shopping-cart div {
@@ -270,6 +273,9 @@ nav {
         height: 240px;
         border-radius: 20px;
         object-fit: cover;
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     .product-info {
@@ -295,6 +301,9 @@ nav {
 
     .product-info figure {
         margin: 0;
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     @media (max-width: 640px) {
