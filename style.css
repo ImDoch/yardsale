@@ -79,7 +79,8 @@ nav {
 
     .navbar-shopping-cart {
         position: relative;
-        &:hover {
+
+        img:hover {
             cursor: pointer;
         }
     }
@@ -167,6 +168,7 @@ nav {
     .title-container img {
         transform: rotate(180deg);
         margin-right: 14px;
+        cursor: pointer;
     }
 
     .title {
@@ -181,26 +183,29 @@ nav {
         gap: 16px;
         margin-bottom: 24px;
         align-items: center;
-    }
 
-    .shopping-cart figure {
-        margin: 0;
-    }
+        figure {
+            margin: 0;
+        }
 
-    .shopping-cart figure img {
-        width: 70px;
-        height: 70px;
-        border-radius: 20px;
-        object-fit: cover;
-    }
+        figure img {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            object-fit: cover;
+        }
 
-    .shopping-cart p:nth-child(2) {
-        color: var(--very-light-pink);
-    }
+        p:nth-child(2) {
+            color: var(--very-light-pink);
+        }
 
-    .shopping-cart p:nth-child(3) {
-        font-size: var(--md);
-        font-weight: bold;
+        p:nth-child(3) {
+            font-size: var(--md);
+            font-weight: bold;
+        }
+        img:last-child {
+            cursor: pointer;
+        }
     }
 
     .order {
@@ -212,21 +217,21 @@ nav {
         margin-bottom: 24px;
         border-radius: 8px;
         padding: 0 24px;
-    }
 
-    .order p:nth-child(1) {
-        display: flex;
-        flex-direction: column;
-    }
+        p:nth-child(1) {
+            display: flex;
+            flex-direction: column;
+        }
 
-    .order p span:nth-child(1) {
-        font-size: var(--md);
-        font-weight: bold;
-    }
+        p span:nth-child(1) {
+            font-size: var(--md);
+            font-weight: bold;
+        }
 
-    .order p:nth-child(2) {
-        text-align: end;
-        font-weight: bold;
+        p:nth-child(2) {
+            text-align: end;
+            font-weight: bold;
+        }
     }
 
     .primary-button {
@@ -259,6 +264,7 @@ nav {
 /*seccion princial*/
 .cards-container {
     margin-top: 20px;
+    padding-bottom: 50px;
     display: grid;
     grid-template-columns: repeat(auto-fit, 240px);
     gap: 26px;
@@ -273,6 +279,7 @@ nav {
         height: 240px;
         border-radius: 20px;
         object-fit: cover;
+
         &:hover {
             cursor: pointer;
         }
@@ -301,6 +308,7 @@ nav {
 
     .product-info figure {
         margin: 0;
+
         &:hover {
             cursor: pointer;
         }
@@ -414,7 +422,11 @@ nav {
 }
 
 
-/*elementos ocultos*/
+/*clases de dinamismo*/
 .hidden {
     display: none;
+}
+
+.no-select {
+    user-select: none;
 }
