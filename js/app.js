@@ -4,10 +4,11 @@ import { products } from "./data.js"
 //Accediendo a elementos en el DOM
 const navbar = document.querySelector('nav')
 const shoppingCartContainer = document.querySelector('.cart-container')
-const produtsContainer = document.querySelector('.cards-container')
+const cartCounter = document.querySelector('.count-items')
+const productsCartItem= document.querySelector('.cart-items')
 const mobileMenu = document.querySelector('.mobile-menu')
 const productDetails = document.querySelector('.product-detail')
-const productsCartItem= document.querySelector('.cart-items')
+const produtsContainer = document.querySelector('.cards-container')
 
 //creando 'directorio' para acceder al objecto de cada producto
 const directory = new Map(products.map(product => [product.id, product]))
@@ -42,6 +43,7 @@ produtsContainer.addEventListener('click', (event) => {
         productsInCart.push(selectedProduct)
         localStorage.setItem('productsInCart', JSON.stringify(productsInCart))
         createAddProduct(productsInCart, productsCartItem)
+        updateCartCounter()
     }
 })
 
@@ -55,3 +57,9 @@ productDetails.addEventListener('click', (event) => {
         productDetails.classList.add('hidden')
     }
 })
+
+//funcion para el contador de productos en el carrito
+function updateCartCounter () {
+    const productsInCart = JSON.parse(localStorage.getItem('productsInCart')) || [];
+    cartCounter.textContent = productsInCart.length
+}
