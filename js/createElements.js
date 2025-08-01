@@ -16,7 +16,7 @@ function createProductCard(arrayProducts, element) {
 
         const divInfo = document.createElement('div')
         const productPrice = document.createElement('p')
-        productPrice.textContent = `$${product.price}`
+        productPrice.textContent = `$${product.price},00`
         const productName = document.createElement('p')
         productName.textContent = product.name
 
@@ -48,18 +48,36 @@ function createAddProduct(arrayProducts, element) {
         productImg.classList.add('product-img')
         productImg.src = product.img
         productImg.alt = 'product image'
+        productImg.loading = 'lazy'
 
         const productName = document.createElement('p')
         productName.textContent = product.name
+
+        const productQuantityDiv = document.createElement('div')
+        const increaseProductQuantity = document.createElement('img')
+        increaseProductQuantity.classList.add('increase-quantity')
+        increaseProductQuantity.src = './assets/icons/increase-icon.svg'
+        increaseProductQuantity.alt = 'increase quantity of same product'
+        increaseProductQuantity.loading = 'lazy'
+        const productQuantity = document.createElement('p')
+        productQuantity.classList.add('product-quantity')
+        productQuantity.textContent = `x${product.quantity}`
+        const decreaseProductQuantity = document.createElement('img')
+        decreaseProductQuantity.classList.add('decrease-quantity')
+        decreaseProductQuantity.src = './assets/icons/decrease-icon.svg'
+        decreaseProductQuantity.alt = 'decrease quantity of same product'
+        decreaseProductQuantity.loading = 'lazy'
+
         const productPrice = document.createElement('p')
-        productPrice.textContent = `$${product.price}`
+        productPrice.textContent = `$${product.price},00`
         const removeIcon = document.createElement('img')
         removeIcon.classList.add('remove-item')
         removeIcon.src = './assets/icons/icon_close.png'
         removeIcon.alt = 'remove product from cart'
 
         figure.append(productImg)
-        shoppingCart.append(figure, productName, productPrice, removeIcon)
+        productQuantityDiv.append(increaseProductQuantity, productQuantity, decreaseProductQuantity)
+        shoppingCart.append(figure, productName, productQuantityDiv, productPrice, removeIcon)
         fragment.append(shoppingCart)
     })
     element.append(fragment)
