@@ -41,6 +41,7 @@ function createAddProduct(arrayProducts, element) {
     arrayProducts.forEach(product => {
         const shoppingCart = document.createElement('div')
         shoppingCart.classList.add('shopping-cart')
+        shoppingCart.dataset.id = product.id
 
         const figure = document.createElement('figure')
 

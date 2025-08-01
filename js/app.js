@@ -9,10 +9,8 @@ const productsCartItem= document.querySelector('.cart-items')
 const mobileMenu = document.querySelector('.mobile-menu')
 const productDetails = document.querySelector('.product-detail')
 const produtsContainer = document.querySelector('.cards-container')
-const productQuantityP = document.querySelector('.product-quantity')
-
 //creando 'directorio' para acceder al objecto de cada producto
-const directory = new Map(products.map(product => [product.id, product]))
+const directoryOfProducts = new Map(products.map(product => [product.id, product]))
 
 //renderizando los productos en el DOM
 createProductCard(products, produtsContainer)
@@ -24,34 +22,37 @@ if (!localStorage.getItem('productsInCart')) {
 
 //Eventos
 navbar.addEventListener('click', (event) => {
-    if(event.target.closest('.shopping-cart-icon')){
+    if(event.target.matches('.shopping-cart-icon')){
         shoppingCartContainer.classList.toggle('hidden')
         mobileMenu.classList.add('hidden')
         productDetails.classList.add('hidden')
     }
-    else if(event.target.closest('.menu')) {
+    else if(event.target.matches('.menu')) {
         mobileMenu.classList.toggle('hidden')
         shoppingCartContainer.classList.add('hidden')
     }
 })
 produtsContainer.addEventListener('click', (event) => {
-    if(event.target.closest('.product-img')) {
+    if(event.target.matches('.product-img')) {
         productDetails.classList.remove('hidden')
         shoppingCartContainer.classList.add('hidden')
     }
-    else if (event.target.closest('.add-to-cart-button')) {
+    else if (event.target.matches('.add-to-cart-button')) {
         createProductOnCart(event)
         updateCartCounter()
     }
 })
 
 shoppingCartContainer.addEventListener('click', (event) => {
-    if(event.target.closest('.close-cart')) {
+    if(event.target.matches('.close-cart')) {
         shoppingCartContainer.classList.add('hidden')
+    }
+    else if (event.target.matches('.remove-item')) {
+        removeProductFromCart(event)
     }
 })
 productDetails.addEventListener('click', (event) => {
-    if(event.target.closest('.product-detail-close')) {
+    if(event.target.matches('.product-detail-close')) {
         productDetails.classList.add('hidden')
     }
 })
@@ -59,15 +60,15 @@ productDetails.addEventListener('click', (event) => {
 //funciones
 
 //contador del carrito dinamico
-function updateCartCounter () {
+function updateCartCounter() {
     const productsInCart = JSON.parse(localStorage.getItem('productsInCart')) || '[]';
     cartCounter.textContent = productsInCart.map(product => product.quantity).reduce((sum, quantity) => sum + quantity, 0)
 }
-//crear elemento dentro del carrito 
+//crear un producto dentro del carrito 
 function createProductOnCart(event) {
     const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
     const idOfSelectedProduct = Number(event.target.closest('.product-card').dataset.id)
-    const selectedProduct = { ...directory.get(idOfSelectedProduct), quantity: 1}
+    const selectedProduct = { ...directoryOfProducts.get(idOfSelectedProduct), quantity: 1}
     const itsInCart = productsInCart.findIndex(product => product.id === idOfSelectedProduct)
     if (itsInCart !== -1) {
         productsInCart[itsInCart].quantity += 1
@@ -78,4 +79,13 @@ function createProductOnCart(event) {
 
     localStorage.setItem('productsInCart', JSON.stringify(productsInCart))
     createAddProduct(productsInCart, productsCartItem)
+}
+//Eliminar un producto del carrito
+function removeProductFromCart(event) {
+    const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
+    const productToRemove = event.target.closest('.shopping-cart')
+    const indexOfProductToRemove = productsInCart.findIndex(product => product.id === productToRemove.dataset.id)
+    productsInCart.splice(indexOfProductToRemove, 1)
+    localStorage.setItem('productsInCart', JSON.stringify(productsInCart))
+    productToRemove.remove()
 }
