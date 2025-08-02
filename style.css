@@ -153,8 +153,8 @@ nav {
 
 /*carrito*/
 .cart-container {
-    width: 350px;
-    padding: 24px;
+    width: 355px;
+    padding: 30px;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -266,7 +266,7 @@ nav {
 
     @media (width >=768px) {
         height: 450px;
-        left: calc(100% - 350px);
+        left: calc(100% - 355px);
         transform: translateX(0);
         overflow-y: auto;
         border-radius: 0 0 0 10px;

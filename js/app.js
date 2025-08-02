@@ -9,6 +9,9 @@ const productsCartItem = document.querySelector('.cart-items')
 const mobileMenu = document.querySelector('.mobile-menu')
 const productDetails = document.querySelector('.product-detail')
 const produtsContainer = document.querySelector('.cards-container')
+const totalInCart = document.querySelector('.total-cart')
+
+
 //creando 'directorio' para acceder al objecto de cada producto
 const directoryOfProducts = new Map(products.map(product => [product.id, product]))
 
@@ -75,7 +78,7 @@ function updateCartCounter() {
 function createProductOnCart(event) {
     const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
     const idOfSelectedProduct = Number(event.target.closest('.product-card').dataset.id)
-    const selectedProduct = { ...directoryOfProducts.get(idOfSelectedProduct), quantity: 1 }
+    const selectedProduct = { ...directoryOfProducts.get(idOfSelectedProduct), quantity: 1}
     const itsInCart = productsInCart.findIndex(product => product.id === idOfSelectedProduct)
     if (itsInCart !== -1) {
         productsInCart[itsInCart].quantity += 1
@@ -83,9 +86,9 @@ function createProductOnCart(event) {
     else {
         productsInCart.push(selectedProduct)
     }
-
     localStorage.setItem('productsInCart', JSON.stringify(productsInCart))
     createAddProduct(productsInCart, productsCartItem)
+    totalToPay()
 }
 //Eliminar un producto del carrito
 function removeProductFromCart(event) {
@@ -95,27 +98,32 @@ function removeProductFromCart(event) {
 
     productsInCart.splice(indexOfProductToRemove, 1)
 
-
     localStorage.setItem('productsInCart', JSON.stringify(productsInCart))
     productToRemove.remove()
+    totalToPay()
     updateCartCounter()
+    
 }
 //incrementar la cantidad de un producto en el carrito
 function increaseProductQuantityInCart(event) {
     const shoppingCart = event.target.closest('.shopping-cart')
     const numberOfProductInCart = shoppingCart.querySelector('.product-quantity')
+    const totalToPayForProduct = shoppingCart.querySelector('.product-cart-price')
     const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
     const productToIncreaseQuantity = event.target.closest('.shopping-cart').dataset.id
     const indexOfProductToIncreaseQuantity = productsInCart.findIndex(product => product.id == productToIncreaseQuantity)
     const actualProduct = productsInCart[indexOfProductToIncreaseQuantity]
     actualProduct.quantity += 1
     numberOfProductInCart.textContent = `x${actualProduct.quantity}`
+    totalToPayForProduct.textContent = `$${actualProduct.price * actualProduct.quantity},00`
     localStorage.setItem('productsInCart', JSON.stringify(productsInCart))
+    totalToPay()
 }
 //disminuir la cantidad del producto en el carrito
 function decreaseProductQuantityInCart(event) {
     const shoppingCart = event.target.closest('.shopping-cart')
     const numberOfProductInCart = shoppingCart.querySelector('.product-quantity')
+    const totalToPayForProduct = shoppingCart.querySelector('.product-cart-price')
     const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
     const productToDecreaseQuantity = event.target.closest('.shopping-cart').dataset.id
     const indexOfProductToDecreaseQuantity = productsInCart.findIndex(product => product.id == productToDecreaseQuantity)
@@ -124,5 +132,18 @@ function decreaseProductQuantityInCart(event) {
         actualProduct.quantity -= 1
         numberOfProductInCart.textContent = `x${actualProduct.quantity}`
     }
+    totalToPayForProduct.textContent = `$${actualProduct.price * actualProduct.quantity},00`
     localStorage.setItem('productsInCart', JSON.stringify(productsInCart))
+    totalToPay()
+}
+//Sumar el total a pagar en el carrito
+function totalToPay() {
+    const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
+    if(productsInCart.length) {
+        const total = productsInCart.reduce((sum, product) => sum + (product.price * product.quantity), 0)
+        totalInCart.textContent = `$${total},00`
+    } else {
+        totalInCart.textContent = '0,00'
+    }
+    
 }
