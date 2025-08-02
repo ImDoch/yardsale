@@ -102,10 +102,11 @@ function removeProductFromCart(event) {
 }
 //incrementar la cantidad de un producto en el carrito
 function increaseProductQuantityInCart(event) {
-    const numberOfProductInCart = document.querySelector('.product-quantity')
+    const shoppingCart = event.target.closest('.shopping-cart')
+    const numberOfProductInCart = shoppingCart.querySelector('.product-quantity')
     const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
     const productToIncreaseQuantity = event.target.closest('.shopping-cart').dataset.id
-    const indexOfProductToIncreaseQuantity = productsInCart.findIndex(product => product.id = productToIncreaseQuantity)
+    const indexOfProductToIncreaseQuantity = productsInCart.findIndex(product => product.id == productToIncreaseQuantity)
     const actualProduct = productsInCart[indexOfProductToIncreaseQuantity]
     actualProduct.quantity += 1
     numberOfProductInCart.textContent = `x${actualProduct.quantity}`
@@ -113,10 +114,11 @@ function increaseProductQuantityInCart(event) {
 }
 //disminuir la cantidad del producto en el carrito
 function decreaseProductQuantityInCart(event) {
-    const numberOfProductInCart = document.querySelector('.product-quantity')
+    const shoppingCart = event.target.closest('.shopping-cart')
+    const numberOfProductInCart = shoppingCart.querySelector('.product-quantity')
     const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
     const productToDecreaseQuantity = event.target.closest('.shopping-cart').dataset.id
-    const indexOfProductToDecreaseQuantity = productsInCart.findIndex(product => product.id = productToDecreaseQuantity)
+    const indexOfProductToDecreaseQuantity = productsInCart.findIndex(product => product.id == productToDecreaseQuantity)
     const actualProduct = productsInCart[indexOfProductToDecreaseQuantity]
     if(actualProduct.quantity !== 1) {
         actualProduct.quantity -= 1
