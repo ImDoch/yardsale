@@ -5,7 +5,7 @@ import { products } from "./data.js"
 const navbar = document.querySelector('nav')
 const shoppingCartContainer = document.querySelector('.cart-container')
 const cartCounter = document.querySelector('.count-items')
-const productsCartItem= document.querySelector('.cart-items')
+const productsCartItem = document.querySelector('.cart-items')
 const mobileMenu = document.querySelector('.mobile-menu')
 const productDetails = document.querySelector('.product-detail')
 const produtsContainer = document.querySelector('.cards-container')
@@ -17,23 +17,23 @@ createProductCard(products, produtsContainer)
 
 //agregando array de productos en el carrito al localStorage
 if (!localStorage.getItem('productsInCart')) {
-  localStorage.setItem('productsInCart', JSON.stringify([]));
+    localStorage.setItem('productsInCart', JSON.stringify([]));
 }
 
 //Eventos
 navbar.addEventListener('click', (event) => {
-    if(event.target.matches('.shopping-cart-icon')){
+    if (event.target.matches('.shopping-cart-icon')) {
         shoppingCartContainer.classList.toggle('hidden')
         mobileMenu.classList.add('hidden')
         productDetails.classList.add('hidden')
     }
-    else if(event.target.matches('.menu')) {
+    else if (event.target.matches('.menu')) {
         mobileMenu.classList.toggle('hidden')
         shoppingCartContainer.classList.add('hidden')
     }
 })
 produtsContainer.addEventListener('click', (event) => {
-    if(event.target.matches('.product-img')) {
+    if (event.target.matches('.product-img')) {
         productDetails.classList.remove('hidden')
         shoppingCartContainer.classList.add('hidden')
     }
@@ -44,21 +44,28 @@ produtsContainer.addEventListener('click', (event) => {
 })
 
 shoppingCartContainer.addEventListener('click', (event) => {
-    if(event.target.matches('.close-cart')) {
+    if (event.target.matches('.close-cart')) {
         shoppingCartContainer.classList.add('hidden')
     }
     else if (event.target.matches('.remove-item')) {
         removeProductFromCart(event)
     }
+    else if (event.target.closest('.increase-quantity')) {
+        increaseProductQuantityInCart(event)
+        updateCartCounter()
+    }
+    else if (event.target.closest('.decrease-quantity')) {
+        decreaseProductQuantityInCart(event)
+        updateCartCounter()
+    }
 })
 productDetails.addEventListener('click', (event) => {
-    if(event.target.matches('.product-detail-close')) {
+    if (event.target.closest('.product-detail-close')) {
         productDetails.classList.add('hidden')
     }
 })
 
 //funciones
-
 //contador del carrito dinamico
 function updateCartCounter() {
     const productsInCart = JSON.parse(localStorage.getItem('productsInCart')) || '[]';
@@ -68,12 +75,12 @@ function updateCartCounter() {
 function createProductOnCart(event) {
     const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
     const idOfSelectedProduct = Number(event.target.closest('.product-card').dataset.id)
-    const selectedProduct = { ...directoryOfProducts.get(idOfSelectedProduct), quantity: 1}
+    const selectedProduct = { ...directoryOfProducts.get(idOfSelectedProduct), quantity: 1 }
     const itsInCart = productsInCart.findIndex(product => product.id === idOfSelectedProduct)
     if (itsInCart !== -1) {
         productsInCart[itsInCart].quantity += 1
     }
-    else{
+    else {
         productsInCart.push(selectedProduct)
     }
 
@@ -85,7 +92,35 @@ function removeProductFromCart(event) {
     const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
     const productToRemove = event.target.closest('.shopping-cart')
     const indexOfProductToRemove = productsInCart.findIndex(product => product.id === productToRemove.dataset.id)
+
     productsInCart.splice(indexOfProductToRemove, 1)
+
+
     localStorage.setItem('productsInCart', JSON.stringify(productsInCart))
     productToRemove.remove()
+    updateCartCounter()
+}
+//incrementar la cantidad de un producto en el carrito
+function increaseProductQuantityInCart(event) {
+    const numberOfProductInCart = document.querySelector('.product-quantity')
+    const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
+    const productToIncreaseQuantity = event.target.closest('.shopping-cart').dataset.id
+    const indexOfProductToIncreaseQuantity = productsInCart.findIndex(product => product.id = productToIncreaseQuantity)
+    const actualProduct = productsInCart[indexOfProductToIncreaseQuantity]
+    actualProduct.quantity += 1
+    numberOfProductInCart.textContent = `x${actualProduct.quantity}`
+    localStorage.setItem('productsInCart', JSON.stringify(productsInCart))
+}
+//disminuir la cantidad del producto en el carrito
+function decreaseProductQuantityInCart(event) {
+    const numberOfProductInCart = document.querySelector('.product-quantity')
+    const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
+    const productToDecreaseQuantity = event.target.closest('.shopping-cart').dataset.id
+    const indexOfProductToDecreaseQuantity = productsInCart.findIndex(product => product.id = productToDecreaseQuantity)
+    const actualProduct = productsInCart[indexOfProductToDecreaseQuantity]
+    if(actualProduct.quantity !== 1) {
+        actualProduct.quantity -= 1
+        numberOfProductInCart.textContent = `x${actualProduct.quantity}`
+    }
+    localStorage.setItem('productsInCart', JSON.stringify(productsInCart))
 }
