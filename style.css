@@ -351,12 +351,16 @@ nav {
 /*detalles del producto*/
 .product-detail {
     width: 320px;
-    padding-bottom: 24px;
+    height: 630px;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    align-items: end;
     background-color: var(--white);
     z-index: 1;
+    
 
     .product-detail-close {
         background-color: var(--white);
@@ -372,10 +376,9 @@ nav {
         align-items: center;
         justify-content: center;
 
-    }
-
-    .product-detail-close:hover {
+        &:hover {
         cursor: pointer;
+        }
     }
 
     &>img:nth-child(2) {
@@ -387,6 +390,7 @@ nav {
 
     .product-info {
         margin: 24px 24px 0 24px;
+        padding-bottom: 12px;
     }
 
     .product-info p:nth-child(1) {

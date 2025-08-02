@@ -1,7 +1,7 @@
 import { createProductCard, createAddProduct } from "./createElements.js"
 import { products } from "./data.js"
 
-//Accediendo a elementos en el DOM
+//accediendo a elementos en el DOM
 const navbar = document.querySelector('nav')
 const shoppingCartContainer = document.querySelector('.cart-container')
 const cartCounter = document.querySelector('.count-items')
@@ -29,24 +29,32 @@ navbar.addEventListener('click', (event) => {
         shoppingCartContainer.classList.toggle('hidden')
         mobileMenu.classList.add('hidden')
         productDetails.classList.add('hidden')
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            produtsContainer.classList.remove('hidden')
+        }
     }
     else if (event.target.matches('.menu')) {
         mobileMenu.classList.toggle('hidden')
         shoppingCartContainer.classList.add('hidden')
+        productDetails.classList.add('hidden')
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            produtsContainer.classList.remove('hidden')
+        }
     }
 })
 produtsContainer.addEventListener('click', (event) => {
     if (event.target.matches('.product-img')) {
+        setToProductDetail(event)
         productDetails.classList.remove('hidden')
         shoppingCartContainer.classList.add('hidden')
-
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            produtsContainer.classList.add('hidden')
+        }
     }
     else if (event.target.matches('.add-to-cart-button')) {
-        createProductOnCart(event)
-        updateCartCounter()
+        createProductOnCart(event.target.closest('.product-card'))
     }
 })
-
 shoppingCartContainer.addEventListener('click', (event) => {
     if (event.target.matches('.close-cart')) {
         shoppingCartContainer.classList.add('hidden')
@@ -56,27 +64,31 @@ shoppingCartContainer.addEventListener('click', (event) => {
     }
     else if (event.target.closest('.increase-quantity')) {
         increaseProductQuantityInCart(event)
-        updateCartCounter()
     }
     else if (event.target.closest('.decrease-quantity')) {
         decreaseProductQuantityInCart(event)
-        updateCartCounter()
     }
 })
 productDetails.addEventListener('click', (event) => {
     if (event.target.closest('.product-detail-close')) {
         productDetails.classList.add('hidden')
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            produtsContainer.classList.remove('hidden')
+        }
+    }
+    else if (event.target.closest('.add-to-cart-button')) {
+        createProductOnCart(event.target.closest('.product-detail'))       
     }
 })
 
 //funciones
 //obtener los productos en el carrito del localstorage
 function getCart() {
-  return JSON.parse(localStorage.getItem('productsInCart') || '[]') ;
+    return JSON.parse(localStorage.getItem('productsInCart') || '[]');
 }
 //guardar los productos en el carrito en localstorage
 function saveCart(cart) {
-  localStorage.setItem('productsInCart', JSON.stringify(cart));
+    localStorage.setItem('productsInCart', JSON.stringify(cart));
 }
 //contador del carrito dinamico
 function updateCartCounter() {
@@ -84,10 +96,10 @@ function updateCartCounter() {
     cartCounter.textContent = productsInCart.map(product => product.quantity).reduce((sum, quantity) => sum + quantity, 0)
 }
 //crear un producto dentro del carrito 
-function createProductOnCart(event) {
+function createProductOnCart(target) {
     const productsInCart = getCart()
-    const idOfSelectedProduct = Number(event.target.closest('.product-card').dataset.id)
-    const selectedProduct = { ...directoryOfProducts.get(idOfSelectedProduct), quantity: 1}
+    const idOfSelectedProduct = Number(target.dataset.id) 
+    const selectedProduct = { ...directoryOfProducts.get(idOfSelectedProduct), quantity: 1 }
     const itsInCart = productsInCart.findIndex(product => product.id === idOfSelectedProduct)
     if (itsInCart !== -1) {
         productsInCart[itsInCart].quantity += 1
@@ -97,9 +109,10 @@ function createProductOnCart(event) {
     }
     saveCart(productsInCart)
     createAddProduct(productsInCart, productsCartItem)
+    updateCartCounter()
     totalToPay()
 }
-//Eliminar un producto del carrito
+//eliminar un producto del carrito
 function removeProductFromCart(event) {
     const productsInCart = getCart()
     const productToRemove = event.target.closest('.shopping-cart')
@@ -111,7 +124,7 @@ function removeProductFromCart(event) {
     productToRemove.remove()
     totalToPay()
     updateCartCounter()
-    
+
 }
 //incrementar la cantidad de un producto en el carrito
 function increaseProductQuantityInCart(event) {
@@ -126,6 +139,7 @@ function increaseProductQuantityInCart(event) {
     numberOfProductInCart.textContent = `x${actualProduct.quantity}`
     totalToPayForProduct.textContent = `$${actualProduct.price * actualProduct.quantity},00`
     saveCart(productsInCart)
+    updateCartCounter()
     totalToPay()
 }
 //disminuir la cantidad del producto en el carrito
@@ -137,21 +151,37 @@ function decreaseProductQuantityInCart(event) {
     const productToDecreaseQuantity = event.target.closest('.shopping-cart').dataset.id
     const indexOfProductToDecreaseQuantity = productsInCart.findIndex(product => product.id == productToDecreaseQuantity)
     const actualProduct = productsInCart[indexOfProductToDecreaseQuantity]
-    if(actualProduct.quantity !== 1) {
+    if (actualProduct.quantity !== 1) {
         actualProduct.quantity -= 1
         numberOfProductInCart.textContent = `x${actualProduct.quantity}`
     }
     totalToPayForProduct.textContent = `$${actualProduct.price * actualProduct.quantity},00`
     saveCart(productsInCart)
+    updateCartCounter()
     totalToPay()
 }
-//Sumar el total a pagar en el carrito
+//sumar el total a pagar en el carrito
 function totalToPay() {
     const productsInCart = getCart()
-    if(productsInCart.length) {
+    if (productsInCart.length) {
         const total = productsInCart.reduce((sum, product) => sum + (product.price * product.quantity), 0)
         totalInCart.textContent = `$${total},00`
     } else {
         totalInCart.textContent = '0,00'
     }
+}
+//pasar los detalles del producto al aside
+function setToProductDetail(event) {
+    const productDetailImg = document.querySelector('.product-img')
+    const productPrice = document.querySelector('.product-info').firstElementChild
+    const productName = document.querySelector('.product-info').children[1]
+    const productDescription = document.querySelector('.product-info').children[2]
+    const idOfSelectedProduct = Number(event.target.closest('.product-card').dataset.id)
+    const selectedProduct = directoryOfProducts.get(idOfSelectedProduct)
+
+    productDetailImg.src = selectedProduct.img
+    productPrice.textContent = `$${selectedProduct.price},00`
+    productName.textContent = selectedProduct.name
+    productDescription.textContent = selectedProduct.description
+    productDetails.dataset.id = idOfSelectedProduct
 }
