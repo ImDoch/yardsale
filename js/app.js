@@ -39,6 +39,7 @@ produtsContainer.addEventListener('click', (event) => {
     if (event.target.matches('.product-img')) {
         productDetails.classList.remove('hidden')
         shoppingCartContainer.classList.add('hidden')
+
     }
     else if (event.target.matches('.add-to-cart-button')) {
         createProductOnCart(event)
@@ -69,6 +70,14 @@ productDetails.addEventListener('click', (event) => {
 })
 
 //funciones
+//obtener los productos en el carrito del localstorage
+function getCart() {
+  return JSON.parse(localStorage.getItem('productsInCart') || '[]') ;
+}
+//guardar los productos en el carrito en localstorage
+function saveCart(cart) {
+  localStorage.setItem('productsInCart', JSON.stringify(cart));
+}
 //contador del carrito dinamico
 function updateCartCounter() {
     const productsInCart = JSON.parse(localStorage.getItem('productsInCart')) || '[]';
@@ -76,7 +85,7 @@ function updateCartCounter() {
 }
 //crear un producto dentro del carrito 
 function createProductOnCart(event) {
-    const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
+    const productsInCart = getCart()
     const idOfSelectedProduct = Number(event.target.closest('.product-card').dataset.id)
     const selectedProduct = { ...directoryOfProducts.get(idOfSelectedProduct), quantity: 1}
     const itsInCart = productsInCart.findIndex(product => product.id === idOfSelectedProduct)
@@ -86,19 +95,19 @@ function createProductOnCart(event) {
     else {
         productsInCart.push(selectedProduct)
     }
-    localStorage.setItem('productsInCart', JSON.stringify(productsInCart))
+    saveCart(productsInCart)
     createAddProduct(productsInCart, productsCartItem)
     totalToPay()
 }
 //Eliminar un producto del carrito
 function removeProductFromCart(event) {
-    const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
+    const productsInCart = getCart()
     const productToRemove = event.target.closest('.shopping-cart')
     const indexOfProductToRemove = productsInCart.findIndex(product => product.id === productToRemove.dataset.id)
 
     productsInCart.splice(indexOfProductToRemove, 1)
 
-    localStorage.setItem('productsInCart', JSON.stringify(productsInCart))
+    saveCart(productsInCart)
     productToRemove.remove()
     totalToPay()
     updateCartCounter()
@@ -109,14 +118,14 @@ function increaseProductQuantityInCart(event) {
     const shoppingCart = event.target.closest('.shopping-cart')
     const numberOfProductInCart = shoppingCart.querySelector('.product-quantity')
     const totalToPayForProduct = shoppingCart.querySelector('.product-cart-price')
-    const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
+    const productsInCart = getCart()
     const productToIncreaseQuantity = event.target.closest('.shopping-cart').dataset.id
     const indexOfProductToIncreaseQuantity = productsInCart.findIndex(product => product.id == productToIncreaseQuantity)
     const actualProduct = productsInCart[indexOfProductToIncreaseQuantity]
     actualProduct.quantity += 1
     numberOfProductInCart.textContent = `x${actualProduct.quantity}`
     totalToPayForProduct.textContent = `$${actualProduct.price * actualProduct.quantity},00`
-    localStorage.setItem('productsInCart', JSON.stringify(productsInCart))
+    saveCart(productsInCart)
     totalToPay()
 }
 //disminuir la cantidad del producto en el carrito
@@ -124,7 +133,7 @@ function decreaseProductQuantityInCart(event) {
     const shoppingCart = event.target.closest('.shopping-cart')
     const numberOfProductInCart = shoppingCart.querySelector('.product-quantity')
     const totalToPayForProduct = shoppingCart.querySelector('.product-cart-price')
-    const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
+    const productsInCart = getCart()
     const productToDecreaseQuantity = event.target.closest('.shopping-cart').dataset.id
     const indexOfProductToDecreaseQuantity = productsInCart.findIndex(product => product.id == productToDecreaseQuantity)
     const actualProduct = productsInCart[indexOfProductToDecreaseQuantity]
@@ -133,17 +142,16 @@ function decreaseProductQuantityInCart(event) {
         numberOfProductInCart.textContent = `x${actualProduct.quantity}`
     }
     totalToPayForProduct.textContent = `$${actualProduct.price * actualProduct.quantity},00`
-    localStorage.setItem('productsInCart', JSON.stringify(productsInCart))
+    saveCart(productsInCart)
     totalToPay()
 }
 //Sumar el total a pagar en el carrito
 function totalToPay() {
-    const productsInCart = JSON.parse(localStorage.getItem('productsInCart') || '[]')
+    const productsInCart = getCart()
     if(productsInCart.length) {
         const total = productsInCart.reduce((sum, product) => sum + (product.price * product.quantity), 0)
         totalInCart.textContent = `$${total},00`
     } else {
         totalInCart.textContent = '0,00'
     }
-    
 }
