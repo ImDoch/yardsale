@@ -3,6 +3,11 @@ import { products } from "./data.js"
 
 //accediendo a elementos en el DOM
 const navbar = document.querySelector('nav')
+const allButton = document.querySelector('.all')
+const clothesButton = document.querySelector('.clothes')
+const eletronicsButton = document.querySelector('.eletronics')
+const fornituresButton = document.querySelector('.fornitures')
+const othersButton = document.querySelector('.others')
 const shoppingCartContainer = document.querySelector('.cart-container')
 const cartCounter = document.querySelector('.count-items')
 const productsCartItem = document.querySelector('.cart-items')
@@ -18,14 +23,9 @@ const directoryOfProducts = new Map(products.map(product => [product.id, product
 //renderizando los productos en el DOM
 createProductCard(products, produtsContainer)
 
-//agregando array de productos en el carrito al localStorage
-if (!localStorage.getItem('productsInCart')) {
-    localStorage.setItem('productsInCart', JSON.stringify([]));
-}
-
 //Eventos
 navbar.addEventListener('click', (event) => {
-    if (event.target.matches('.shopping-cart-icon')) {
+    if (event.target.matches('.shopping-cart-icon') || event.target.matches('.count-items')) {
         shoppingCartContainer.classList.toggle('hidden')
         mobileMenu.classList.add('hidden')
         productDetails.classList.add('hidden')
@@ -41,6 +41,23 @@ navbar.addEventListener('click', (event) => {
             produtsContainer.classList.remove('hidden')
         }
     }
+    else if (event.target.closest('.all')) {
+        event.preventDefault()
+        produtsContainer.innerHTML = ''
+        createProductCard(products, produtsContainer)
+    }
+    else if (event.target.closest('.clothes')) {
+        filterByCategory(event,'clothes')
+    }
+    else if (event.target.closest('.electronics')) {
+        filterByCategory(event,'electronics')
+    }
+    else if (event.target.closest('.furnitures')) {
+        filterByCategory(event,'furnitures')
+    }
+    else if (event.target.closest('.others')) {
+        filterByCategory(event,'others')
+    }
 })
 produtsContainer.addEventListener('click', (event) => {
     if (event.target.matches('.product-img')) {
@@ -50,6 +67,7 @@ produtsContainer.addEventListener('click', (event) => {
         if (window.matchMedia('(max-width: 768px)').matches) {
             produtsContainer.classList.add('hidden')
         }
+        mobileMenu.classList.add('hidden')
     }
     else if (event.target.matches('.add-to-cart-button')) {
         createProductOnCart(event.target.closest('.product-card'))
@@ -80,11 +98,35 @@ productDetails.addEventListener('click', (event) => {
         createProductOnCart(event.target.closest('.product-detail'))       
     }
 })
+mobileMenu.addEventListener('click', (event) => {
+    if (event.target.closest('.all')) {
+        event.preventDefault()
+        produtsContainer.innerHTML = ''
+        createProductCard(products, produtsContainer)
+    }
+    else if (event.target.closest('.clothes')) {
+        filterByCategory(event,'clothes')
+    }
+    else if (event.target.closest('.electronics')) {
+        filterByCategory(event,'electronics')
+    }
+    else if (event.target.closest('.furnitures')) {
+        filterByCategory(event,'furnitures')
+    }
+    else if (event.target.closest('.others')) {
+        filterByCategory(event,'others')
+    }
+})
 
 //funciones
 //obtener los productos en el carrito del localstorage
 function getCart() {
-    return JSON.parse(localStorage.getItem('productsInCart') || '[]');
+    const cart = localStorage.getItem('productsInCart');
+    if (!cart) {
+        localStorage.setItem('productsInCart', JSON.stringify([]));
+        return [];
+    }
+    return JSON.parse(cart);
 }
 //guardar los productos en el carrito en localstorage
 function saveCart(cart) {
@@ -184,4 +226,22 @@ function setToProductDetail(event) {
     productName.textContent = selectedProduct.name
     productDescription.textContent = selectedProduct.description
     productDetails.dataset.id = idOfSelectedProduct
+}
+//funcion para filtrar por categoria
+function filterByCategory(event,category) {
+    event.preventDefault()
+    produtsContainer.innerHTML = ''
+    const filteredProducts = products.filter(product => product.type === category)
+    createProductCard(filteredProducts, produtsContainer)
+}
+
+
+
+
+// Renderizar productos guardados en el carrito al cargar la página
+const productsInCart = getCart();
+if (productsInCart.length) {
+    createAddProduct(productsInCart, productsCartItem);
+    updateCartCounter();
+    totalToPay();
 }
