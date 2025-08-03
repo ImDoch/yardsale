@@ -25,7 +25,7 @@ createProductCard(products, produtsContainer)
 
 //Eventos
 navbar.addEventListener('click', (event) => {
-    if (event.target.matches('.shopping-cart-icon') || event.target.matches('.count-items')) {
+    if (event.target.matches('.shopping-cart-icon', '.count-items')) {
         shoppingCartContainer.classList.toggle('hidden')
         mobileMenu.classList.add('hidden')
         productDetails.classList.add('hidden')
@@ -103,18 +103,28 @@ mobileMenu.addEventListener('click', (event) => {
         event.preventDefault()
         produtsContainer.innerHTML = ''
         createProductCard(products, produtsContainer)
+        mobileMenu.classList.add('hidden')
+        produtsContainer.classList.remove('hidden')
     }
     else if (event.target.closest('.clothes')) {
         filterByCategory(event,'clothes')
+        mobileMenu.classList.add('hidden')
+        produtsContainer.classList.remove('hidden')
     }
     else if (event.target.closest('.electronics')) {
         filterByCategory(event,'electronics')
+        mobileMenu.classList.add('hidden')
+        produtsContainer.classList.remove('hidden')
     }
     else if (event.target.closest('.furnitures')) {
         filterByCategory(event,'furnitures')
+        mobileMenu.classList.add('hidden')
+        produtsContainer.classList.remove('hidden')
     }
     else if (event.target.closest('.others')) {
         filterByCategory(event,'others')
+        mobileMenu.classList.add('hidden')
+        produtsContainer.classList.remove('hidden')
     }
 })
 
