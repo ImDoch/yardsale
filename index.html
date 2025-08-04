@@ -22,19 +22,19 @@
 
                 <ul>
                     <li>
-                        <a href="#">All</a>
+                        <a href="" class="all">All</a>
                     </li>
                     <li>
-                        <a href="#">Clothes</a>
+                        <a href="" class="clothes">Clothes</a>
                     </li>
                     <li>
-                        <a href="#">Electronics</a>
+                        <a href="" class="electronics">Electronics</a>
                     </li>
                     <li>
-                        <a href="#">Furnitures</a>
+                        <a href="" class="furnitures">Furnitures</a>
                     </li>
                     <li>
-                        <a href="#">Others</a>
+                        <a href="" class="others">Others</a>
                     </li>
                 </ul>
             </div>
@@ -44,7 +44,7 @@
                         <img src="assets/icons/icon_shopping_cart.svg" alt="Shopping cart icon"
                             class="shopping-cart-icon no-select">
 
-                        <div class="count-items">0</div>
+                        <div class="count-items no-select">0</div>
                     </li>
                 </ul>
             </div>
@@ -52,27 +52,27 @@
         <section class="mobile-menu hidden">
             <ul>
                 <li>
-                    <a href="#">CATEGORIES</a>
+                    <a href="">CATEGORIES</a>
                 </li>
 
                 <li>
-                    <a href="#">All</a>
+                    <a href="" class="all">All</a>
                 </li>
 
                 <li>
-                    <a href="#">Clothes</a>
+                    <a href="" class="clothes">Clothes</a>
                 </li>
 
                 <li>
-                    <a href="#">Electronics</a>
+                    <a href="" class="electronics">Electronics</a>
                 </li>
 
                 <li>
-                    <a href="#">Furnitures</a>
+                    <a href="" class="furnitures">Furnitures</a>
                 </li>
 
                 <li>
-                    <a href="#">Others</a>
+                    <a href="" class="others">Others</a>
                 </li>
             </ul>
         </section>
@@ -83,25 +83,11 @@
                 <p class="title">My order</p>
             </div>
 
+            <div class="hidden">
+                <p>Looks like your cart is empty. Let's fix that!</p>
+            </div>
+
             <div class="cart-items">
-                
-                <!-- <div class="shopping-cart">
-                    <figure>
-                        <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                            alt="Bike image" class="product-img">
-                    </figure>
-
-                    <p>Bike</p>
-                    <div>
-                        <img src="./assets/icons/increase-icon.svg" alt="increase quantity of same product" class="increase-quantity">
-                        <p>x1</p>
-                        <img src="./assets/icons/decrease-icon.svg" alt="decrease quantity of same product" class="decrease-quantity">
-                    </div>
-                    <p>$50,00</p>
-                    <img src="./assets/icons/icon_close.png" alt="close" class="remove-item">
-                </div> -->
-
-                
             </div>
 
             <div class="order">
@@ -109,12 +95,17 @@
                     <span>Total</span>
                 </p>
 
-                <p>$560.00</p>
+                <p class="total-cart">$0,00</p>
             </div>
 
             <button class="primary-button" value="Add to cart">
                 Checkout
             </button>
+        </section>
+    </header>
+
+    <main class="main-container ">
+        <section class="cards-container ">
         </section>
         <aside class="product-detail hidden">
             <div class="product-detail-close">
@@ -129,19 +120,33 @@
                 <p>Bike</p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, numquam eum cupiditate autem iure
                     vel doloremque, unde nesciunt ut earum deserunt!</p>
-
                 <button class="primary-button add-to-cart-button" value="Add to cart">
                     <img src="assets/icons/bt_add_to_cart.svg" alt="Add to card">
                     Add to cart
                 </button>
             </div>
         </aside>
-    </header>
-
-    <main class="main-container ">
-        <section class="cards-container ">
-        </section>
     </main>
+    <dialog class="step-confirm modal">
+        <div>
+            <h2>Are you sure you want to confirm your purchase?</h2>
+            <p class="show-total">Total: $120,00</p>
+            <div>
+                <button class="confirm">Confirm</button>
+                <button class="cancel">Cancel</button>
+            </div>
+        </div>
+    </dialog>
+    <dialog class="step-success modal">
+        <div>
+            <h2>Purchase completed!</h2>
+            <p>Thank you for your purchase</p>
+            <form method="dialog">
+                <button>Close</button>
+            </form>
+            
+        </div>
+    </dialog>
     <script type="module" src="./js/app.js"></script>
 </body>
 

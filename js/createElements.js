@@ -70,7 +70,8 @@ function createAddProduct(arrayProducts, element) {
         decreaseProductQuantity.loading = 'lazy'
 
         const productPrice = document.createElement('p')
-        productPrice.textContent = `$${product.price},00`
+        productPrice.classList.add('product-cart-price')
+        productPrice.textContent = `$${product.price * product.quantity},00`
         const removeIcon = document.createElement('img')
         removeIcon.classList.add('remove-item')
         removeIcon.src = './assets/icons/icon_close.png'

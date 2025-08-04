@@ -26,13 +26,16 @@ body {
 }
 
 nav {
-    position: relative;
-    width: calc(100% -24px);
+    position: fixed;
+    top: 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     padding: 0 24px;
     height: 60px;
     border-bottom: 1px solid var(--very-light-pink);
+    background: var(--white);
+    z-index: 2;
 
     .menu {
         display: none;
@@ -43,6 +46,7 @@ nav {
 
     .logo {
         width: 100px;
+        cursor: pointer;
     }
 
     .navbar-left {
@@ -98,6 +102,7 @@ nav {
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
     }
 
     @media (width <=768px) {
@@ -153,9 +158,10 @@ nav {
 
 /*carrito*/
 .cart-container {
-    width: 350px;
-    padding: 24px;
+    min-width: 315px;
+    padding: 30px;
     position: absolute;
+    top: 60px;
     left: 50%;
     transform: translateX(-50%);
     display: grid;
@@ -171,11 +177,23 @@ nav {
         transform: rotate(180deg);
         margin-right: 14px;
         cursor: pointer;
+        width: 24px;
+        height: 24px;
     }
 
     .title {
         font-size: var(--lg);
         font-weight: bold;
+    }
+
+    div:nth-child(2) {
+        width: 250px;
+        grid-row: 2/3;
+        align-self: center;
+        justify-self: center;
+        text-align: center;
+        font-weight: bold;
+        margin: 40px 0;
     }
 
     .shopping-cart {
@@ -200,6 +218,7 @@ nav {
         p:nth-child(2) {
             color: var(--very-light-pink);
         }
+        
         div:nth-child(3) {
             display: flex;
             flex-direction: column;
@@ -265,11 +284,15 @@ nav {
     }
 
     @media (width >=768px) {
+        position: fixed;
+        top: 60px;
+        max-width: 370px;
         height: 450px;
-        left: calc(100% - 350px);
+        left: calc(100% - 370px);
         transform: translateX(0);
         overflow-y: auto;
-        border-radius: 0 0 0 10px;
+        overflow-x: hidden;
+        border-radius: 0 0 10px 10px;
         border: none;
         scrollbar-width: thin;
         scrollbar-color: var(--hospital-green) transparent;
@@ -281,7 +304,7 @@ nav {
 
 /*seccion princial*/
 .cards-container {
-    margin-top: 20px;
+    margin-top: 80px;
     padding-bottom: 50px;
     display: grid;
     grid-template-columns: repeat(auto-fit, 240px);
@@ -351,12 +374,17 @@ nav {
 /*detalles del producto*/
 .product-detail {
     width: 320px;
-    padding-bottom: 24px;
+    height: 630px;
     position: absolute;
+    top: 60px;
     left: 50%;
     transform: translateX(-50%);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    align-items: end;
     background-color: var(--white);
     z-index: 1;
+    
 
     .product-detail-close {
         background-color: var(--white);
@@ -372,10 +400,9 @@ nav {
         align-items: center;
         justify-content: center;
 
-    }
-
-    .product-detail-close:hover {
+        &:hover {
         cursor: pointer;
+        }
     }
 
     &>img:nth-child(2) {
@@ -387,6 +414,7 @@ nav {
 
     .product-info {
         margin: 24px 24px 0 24px;
+        padding-bottom: 12px;
     }
 
     .product-info p:nth-child(1) {
@@ -426,19 +454,64 @@ nav {
     }
 
     @media (width >=768px) {
+        position: fixed;
+        top: 60px;
         left: calc(100% - 320px);
         transform: translateX(0);
         overflow-y: auto;
-        border-radius: 0 0 10px 10px;
+        border-radius: 0 10px;
         border: none;
         scrollbar-width: thin;
         scrollbar-color: var(--hospital-green) transparent;
-        border-right: 1px solid var(--very-light-pink);
-        border-left: 1px solid var(--very-light-pink);
-        border-bottom: 1px solid var(--very-light-pink);
+        border: 1px solid var(--very-light-pink);
     }
 }
+/*modales*/
+.modal {
+    width: clamp(288px, 90%, 400px);
+    padding: 1.6rem;
+    text-align: center;
+    border-radius: 15px;
+    border: 2px solid var(--very-light-pink);
+    margin: auto;
 
+    div:first-child {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        gap: 10px;
+    }
+
+    p {
+        width: fit-content;
+        margin: 20px auto;
+        padding: 10px;
+        font-weight: bold;
+        border-radius: 10px;
+        border: 1px solid var(--hospital-green);
+        background-color: var(--text-input-field);  
+    }
+    button {
+        width: 100px;
+        padding: 10px;
+        font-weight: bold;
+        
+        border-radius: 10px;
+        border: 1px solid var(--hospital-green);
+        background-color: var(--hospital-green);
+        color: white;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    button:last-child {
+        margin-left: 10px;
+        border: 1px solid #ccc;
+        background-color: #ccc;
+    }
+}
 
 /*clases de dinamismo*/
 .hidden {
