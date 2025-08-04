@@ -141,6 +141,11 @@ mobileMenu.addEventListener('click', (event) => {
 })
 confirmModal.addEventListener('click', (event) => {
     if(event.target.closest('.confirm')){
+        saveCart([])
+        updateCartCounter()
+        productsCartItem.innerHTML = ''
+        totalInCart.textContent = '$0,00'
+        shoppingCartContainer.children[1].classList.remove('hidden')
         confirmModal.close()
         successModal.showModal()
     }
@@ -283,7 +288,7 @@ if (productsInCart.length) {
 //modal para concretar la compra
 function showConfirmModal() {
     const showTotalToPayOnModal = document.querySelector('.show-total')
-    const total = document.querySelector('.total-cart').textContent
+    const total = totalInCart.textContent
     showTotalToPayOnModal.textContent = total
     if (showTotalToPayOnModal.textContent !== '$0,00') {
         shoppingCartContainer.classList.add('hidden')
