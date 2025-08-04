@@ -94,6 +94,7 @@ shoppingCartContainer.addEventListener('click', (event) => {
         decreaseProductQuantityInCart(event)
     }
     else if(event.target.closest('.primary-button')) {
+        shoppingCartContainer.classList.add('hidden')
         showConfirmModal()
     }
 })
@@ -169,6 +170,7 @@ function createProductOnCart(target) {
     else {
         productsInCart.push(selectedProduct)
     }
+    shoppingCartContainer.children[1].classList.add('hidden')
     saveCart(productsInCart)
     createAddProduct(productsInCart, productsCartItem)
     updateCartCounter()
@@ -181,7 +183,9 @@ function removeProductFromCart(event) {
     const indexOfProductToRemove = productsInCart.findIndex(product => product.id === productToRemove.dataset.id)
 
     productsInCart.splice(indexOfProductToRemove, 1)
-
+    if(!productsInCart.length) {
+        shoppingCartContainer.children[1].classList.remove('hidden')
+    }
     saveCart(productsInCart)
     productToRemove.remove()
     totalToPay()
@@ -261,6 +265,8 @@ if (productsInCart.length) {
     createAddProduct(productsInCart, productsCartItem);
     updateCartCounter();
     totalToPay();
+} else {
+    shoppingCartContainer.children[1].classList.remove('hidden')
 }
 //modales
 //modal para concretar la compra
