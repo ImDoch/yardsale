@@ -17,6 +17,8 @@ const produtsContainer = document.querySelector('.cards-container')
 const totalInCart = document.querySelector('.total-cart')
 const confirmModal = document.querySelector('.step-confirm')
 const successModal = document.querySelector('.step-success')
+const confirmPurchaseButton = document.querySelector('.confirm')
+const cancelPurchaseButton = document.querySelector('.cancel')
 
 
 //creando 'directorio' para acceder al objecto de cada producto
@@ -94,7 +96,6 @@ shoppingCartContainer.addEventListener('click', (event) => {
         decreaseProductQuantityInCart(event)
     }
     else if(event.target.closest('.primary-button')) {
-        shoppingCartContainer.classList.add('hidden')
         showConfirmModal()
     }
 })
@@ -136,6 +137,16 @@ mobileMenu.addEventListener('click', (event) => {
         filterByCategory(event,'others')
         mobileMenu.classList.add('hidden')
         produtsContainer.classList.remove('hidden')
+    }
+})
+confirmModal.addEventListener('click', (event) => {
+    if(event.target.closest('.confirm')){
+        confirmModal.close()
+        successModal.showModal()
+    }
+    else if(event.target.closest('.cancel')) {
+        confirmModal.close()
+        shoppingCartContainer.classList.remove('hidden')
     }
 })
 
@@ -233,7 +244,7 @@ function totalToPay() {
         const total = productsInCart.reduce((sum, product) => sum + (product.price * product.quantity), 0)
         totalInCart.textContent = `$${total},00`
     } else {
-        totalInCart.textContent = '0,00'
+        totalInCart.textContent = '$0,00'
     }
 }
 //pasar los detalles del producto al aside
@@ -271,5 +282,11 @@ if (productsInCart.length) {
 //modales
 //modal para concretar la compra
 function showConfirmModal() {
-    confirmModal.showModal()
+    const showTotalToPayOnModal = document.querySelector('.show-total')
+    const total = document.querySelector('.total-cart').textContent
+    showTotalToPayOnModal.textContent = total
+    if (showTotalToPayOnModal.textContent !== '$0,00') {
+        shoppingCartContainer.classList.add('hidden')
+        confirmModal.showModal()
+    }
 }

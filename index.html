@@ -95,7 +95,7 @@
                     <span>Total</span>
                 </p>
 
-                <p class="total-cart">0,00</p>
+                <p class="total-cart">$0,00</p>
             </div>
 
             <button class="primary-button" value="Add to cart">
@@ -128,18 +128,25 @@
         </aside>
     </main>
     <dialog class="step-confirm modal">
-        <h2>Are you sure you want to confirm your purchase?</h2>
-        <p>Total: $120,00</p>
         <div>
-            <button>Confirm</button>
-            <button>Cancel</button>
+            <h2>Are you sure you want to confirm your purchase?</h2>
+            <p class="show-total">Total: $120,00</p>
+            <div>
+                <button class="confirm">Confirm</button>
+                <button class="cancel">Cancel</button>
+            </div>
         </div>
     </dialog>
-    <!-- <dialog class="step-success modal">
-        <h2>Purchase completed!</h2>
-        <p>Thank you for your purchase</p>
-        <button>Close</button>
-    </dialog> -->
+    <dialog class="step-success modal">
+        <div>
+            <h2>Purchase completed!</h2>
+            <p>Thank you for your purchase</p>
+            <form method="dialog">
+                <button>Close</button>
+            </form>
+            
+        </div>
+    </dialog>
     <script type="module" src="./js/app.js"></script>
 </body>
 
