@@ -25,38 +25,42 @@ createProductCard(products, produtsContainer)
 
 //Eventos
 navbar.addEventListener('click', (event) => {
-    if (event.target.matches('.shopping-cart-icon', '.count-items')) {
+    if (event.target.matches('.shopping-cart-icon') || event.target.matches('.count-items')) {
         shoppingCartContainer.classList.toggle('hidden')
         mobileMenu.classList.add('hidden')
         productDetails.classList.add('hidden')
         if (window.matchMedia('(max-width: 768px)').matches) {
-            produtsContainer.classList.remove('hidden')
+            produtsContainer.classList.toggle('hidden')
         }
     }
     else if (event.target.matches('.menu')) {
         mobileMenu.classList.toggle('hidden')
+        produtsContainer.classList.toggle('hidden')
         shoppingCartContainer.classList.add('hidden')
         productDetails.classList.add('hidden')
-        if (window.matchMedia('(max-width: 768px)').matches) {
-            produtsContainer.classList.remove('hidden')
-        }
+        
     }
-    else if (event.target.closest('.all')) {
+    else if (event.target.closest('.all') || event.target.closest('.logo')) {
         event.preventDefault()
         produtsContainer.innerHTML = ''
         createProductCard(products, produtsContainer)
+        productDetails.classList.add('hidden')   
     }
     else if (event.target.closest('.clothes')) {
         filterByCategory(event,'clothes')
+        productDetails.classList.add('hidden')
     }
     else if (event.target.closest('.electronics')) {
         filterByCategory(event,'electronics')
+        productDetails.classList.add('hidden')
     }
     else if (event.target.closest('.furnitures')) {
         filterByCategory(event,'furnitures')
+        productDetails.classList.add('hidden')
     }
     else if (event.target.closest('.others')) {
         filterByCategory(event,'others')
+        productDetails.classList.add('hidden')
     }
 })
 produtsContainer.addEventListener('click', (event) => {
@@ -76,6 +80,7 @@ produtsContainer.addEventListener('click', (event) => {
 shoppingCartContainer.addEventListener('click', (event) => {
     if (event.target.matches('.close-cart')) {
         shoppingCartContainer.classList.add('hidden')
+        produtsContainer.classList.remove('hidden')
     }
     else if (event.target.matches('.remove-item')) {
         removeProductFromCart(event)
@@ -224,10 +229,11 @@ function totalToPay() {
 }
 //pasar los detalles del producto al aside
 function setToProductDetail(event) {
-    const productDetailImg = document.querySelector('.product-img')
-    const productPrice = document.querySelector('.product-info').firstElementChild
-    const productName = document.querySelector('.product-info').children[1]
-    const productDescription = document.querySelector('.product-info').children[2]
+    const productDetailImg = productDetails.children[1]
+    const productDetailInfo = productDetails.children[2]
+    const productPrice = productDetailInfo.firstElementChild
+    const productName = productDetailInfo.children[1]
+    const productDescription = productDetailInfo.children[2]
     const idOfSelectedProduct = Number(event.target.closest('.product-card').dataset.id)
     const selectedProduct = directoryOfProducts.get(idOfSelectedProduct)
 

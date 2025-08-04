@@ -26,14 +26,16 @@ body {
 }
 
 nav {
-    position: relative;
-    width: calc(100% -24px);
+    position: fixed;
+    top: 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     padding: 0 24px;
     height: 60px;
     border-bottom: 1px solid var(--very-light-pink);
     background: var(--white);
+    z-index: 2;
 
     .menu {
         display: none;
@@ -44,6 +46,7 @@ nav {
 
     .logo {
         width: 100px;
+        cursor: pointer;
     }
 
     .navbar-left {
@@ -155,9 +158,10 @@ nav {
 
 /*carrito*/
 .cart-container {
-    min-width: 355px;
+    min-width: 315px;
     padding: 30px;
     position: absolute;
+    top: 60px;
     left: 50%;
     transform: translateX(-50%);
     display: grid;
@@ -269,11 +273,15 @@ nav {
     }
 
     @media (width >=768px) {
+        position: fixed;
+        top: 60px;
+        max-width: 370px;
         height: 450px;
         left: calc(100% - 370px);
         transform: translateX(0);
         overflow-y: auto;
-        border-radius: 0 0 0 10px;
+        overflow-x: hidden;
+        border-radius: 0 0 10px 10px;
         border: none;
         scrollbar-width: thin;
         scrollbar-color: var(--hospital-green) transparent;
@@ -285,7 +293,7 @@ nav {
 
 /*seccion princial*/
 .cards-container {
-    margin-top: 20px;
+    margin-top: 80px;
     padding-bottom: 50px;
     display: grid;
     grid-template-columns: repeat(auto-fit, 240px);
@@ -357,6 +365,7 @@ nav {
     width: 320px;
     height: 630px;
     position: absolute;
+    top: 60px;
     left: 50%;
     transform: translateX(-50%);
     display: grid;
@@ -434,10 +443,12 @@ nav {
     }
 
     @media (width >=768px) {
+        position: fixed;
+        top: 60px;
         left: calc(100% - 320px);
         transform: translateX(0);
         overflow-y: auto;
-        border-radius: 10px;
+        border-radius: 0 10px;
         border: none;
         scrollbar-width: thin;
         scrollbar-color: var(--hospital-green) transparent;
