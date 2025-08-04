@@ -15,6 +15,8 @@ const mobileMenu = document.querySelector('.mobile-menu')
 const productDetails = document.querySelector('.product-detail')
 const produtsContainer = document.querySelector('.cards-container')
 const totalInCart = document.querySelector('.total-cart')
+const confirmModal = document.querySelector('.step-confirm')
+const successModal = document.querySelector('.step-success')
 
 
 //creando 'directorio' para acceder al objecto de cada producto
@@ -90,6 +92,9 @@ shoppingCartContainer.addEventListener('click', (event) => {
     }
     else if (event.target.closest('.decrease-quantity')) {
         decreaseProductQuantityInCart(event)
+    }
+    else if(event.target.closest('.primary-button')) {
+        showConfirmModal()
     }
 })
 productDetails.addEventListener('click', (event) => {
@@ -250,14 +255,15 @@ function filterByCategory(event,category) {
     const filteredProducts = products.filter(product => product.type === category)
     createProductCard(filteredProducts, produtsContainer)
 }
-
-
-
-
-// Renderizar productos guardados en el carrito al cargar la página
+//renderizar productos guardados en el carrito al cargar la página
 const productsInCart = getCart();
 if (productsInCart.length) {
     createAddProduct(productsInCart, productsCartItem);
     updateCartCounter();
     totalToPay();
+}
+//modales
+//modal para concretar la compra
+function showConfirmModal() {
+    confirmModal.showModal()
 }
